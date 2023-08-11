@@ -1,7 +1,9 @@
 import { Router } from "express";
-import { login, register } from "../controllers/usuarios.controller.js";
+const { login, register } = require("../controllers/usuarios.controller.js");
 
-const router =Router()
+const express = require('express') // <- forma que se hace en nodejs 🚩
+
+const router =express.Router()
 
 router.post('/register',register)
 router.post('/login',login)

@@ -1,6 +1,6 @@
 import usuarioModels from "../models/usuario.models.js"
 
-export const register =async (req, res) => {
+export const register = async (req, res) => {
     const { nombre, apellidos, email, edad, cargo, password } = req.body
     console.log(nombre, apellidos, email, edad, cargo, password)
 
@@ -14,7 +14,7 @@ export const register =async (req, res) => {
             password
         })
         await newUsuario.save()
-        res.send(newUsuario)
+        res.status(200).send(newUsuario)
     } catch (error) {
         console.log(error)
     }
