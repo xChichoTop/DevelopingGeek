@@ -34,7 +34,7 @@ A. PREPARAR EL PAQUETE DEFINITIVO
    permite apagar los contenedores sin eliminar el volumen ni las evidencias.
 
 Si aparece un error rojo: no se genera un nuevo paquete aprobado. Busca
-ERROR.txt en la subcarpeta indicada de evidencias y envialo para corregirlo.
+ERROR.txt en la subcarpeta indicada de evidencias y revisa el comando fallido.
 Si ya habia un ZIP aprobado de otro intento, no confundirlo con el intento
 fallido: cada ejecucion usa una carpeta con fecha y un identificador propio.
 

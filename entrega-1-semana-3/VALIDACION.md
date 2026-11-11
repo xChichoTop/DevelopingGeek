@@ -21,9 +21,7 @@ La ejecución Actions 42946871111 terminó sin iniciar el runner ni ejecutar pas
 ## Automatización preparada
 .github/workflows/verificar-docker.yml permite ejecutar esas comprobaciones de Docker en GitHub Actions después de subir el repositorio. El primer intento del flujo no inició los pasos de construcción. Genera un artefacto llamado evidencias-dos-contenedores con registros reales. También puede validarse en Windows mediante INICIAR.bat y VERIFICAR.bat.
 
-## Revisión individual
-Estudiante: Johan Alvarez Parra. Docente: Edwar Reyes. Modalidad: individual.
-Se revisaron el informe, las rutas, la configuración de servicios y el contenido del paquete.
-PREPARAR_ENTREGA.bat reúne la validación completa y el ZIP final cuando Docker real aprueba las comprobaciones. Su existencia no acredita una ejecución Docker ya realizada.
+## Comprobación automatizada
+PREPARAR_ENTREGA.bat genera el resultado de Docker únicamente después de aprobar los controles de estado, red, comunicación y persistencia. El registro resultado_docker.json identifica la fecha y los contenedores de esa ejecución.
 
-La sintaxis del verificador PowerShell fue comprobada con el analizador de PowerShell. Sus rutas de éxito y fallo se probaron con una CLI simulada en un directorio temporal ajeno al proyecto; esos resultados no se incluyen como evidencia Docker.
+Las pruebas del programa de comprobación y las pruebas locales de la aplicación no sustituyen la ejecución real de los contenedores.

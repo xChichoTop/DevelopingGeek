@@ -17,20 +17,17 @@ Los servicios comparten la red `proyecto`. Web se conecta a `datos:6379`.
 El navegador accede a `http://localhost:5000`. Redis no publica puertos al equipo.
 El volumen `tareas` conserva los archivos AOF del almacenamiento.
 
-## Inicio rápido en Windows
+## Ejecución en Windows
 
-1. Extraer el ZIP y abrir Docker Desktop.
-2. Abrir la carpeta que contiene `compose.yaml`.
-3. Ejecutar `PREPARAR_ENTREGA.bat` con doble clic.
-4. Esperar el mensaje **VALIDACION DOCKER APROBADA**.
-5. Subir el ZIP que se genera dentro de `entrega_para_subir`, siguiendo `PASO_A_PASO_ENTREGA.txt`.
+El proyecto requiere Docker Desktop con el motor iniciado.
+`INICIAR.bat` construye e inicia la aplicación. `VERIFICAR.bat` realiza la prueba
+básica. `DETENER.bat` apaga los servicios sin eliminar los datos.
 
-El programa comprueba dos servicios saludables, red compartida, nueve pruebas,
-lectura directa de Redis, recreación de contenedores y conservación del registro.
-Si un paso falla, guarda `ERROR.txt` y no genera un paquete aprobado de ese intento.
-
-`INICIAR.bat` solo inicia la aplicación. `VERIFICAR.bat` realiza la prueba básica.
-`DETENER.bat` apaga los servicios. La comprobación completa es `PREPARAR_ENTREGA.bat`.
+`PREPARAR_ENTREGA.bat` ejecuta la comprobación completa. Verifica dos servicios
+saludables, red compartida, nueve pruebas, lectura directa de Redis, recreación
+de contenedores y conservación de un registro. Si todos los controles pasan,
+genera un ZIP con el informe, el código y las evidencias de ejecución. Si un paso
+falla, guarda un registro ERROR.txt y detiene el proceso.
 
 ## Ejecución manual
 

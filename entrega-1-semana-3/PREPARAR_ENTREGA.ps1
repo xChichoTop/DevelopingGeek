@@ -90,7 +90,7 @@ try {
     $code = Join-Path $package 'codigo'
     New-Item -ItemType Directory -Path $code -Force | Out-Null
     foreach ($item in Get-ChildItem -LiteralPath $PSScriptRoot -Force) {
-        if ($item.Name -in @('.git','__pycache__','entrega_para_subir','informe','evidencias')) { continue }
+        if ($item.Name -in @('.git','__pycache__','entrega_para_subir','informe','evidencias','EMPIEZA_AQUI.txt','PASO_A_PASO_ENTREGA.txt')) { continue }
         if ($item.Extension -eq '.zip') { continue }
         Copy-Item -LiteralPath $item.FullName -Destination $code -Recurse -Force
     }
@@ -114,13 +114,13 @@ try {
     Write-Host 'VALIDACION DOCKER APROBADA' -ForegroundColor Green
     Write-Host 'El ZIP para subir al aula esta en:' -ForegroundColor Green
     Write-Host $archive
-    Write-Host 'Consulta PASO_A_PASO_ENTREGA.txt para enviarlo.'
+    Write-Host 'Comprueba el contenido del archivo ZIP antes de entregarlo.'
     Start-Process explorer.exe -ArgumentList ('"' + $destination + '"')
     exit 0
 } catch {
     [System.IO.File]::WriteAllText((Join-Path $ev 'ERROR.txt'), $_.ToString(), $utf8)
     Write-Host ('NO SE GENERO UNA ENTREGA APROBADA: ' + $_.ToString()) -ForegroundColor Red
     Write-Host ('Revisa: ' + $ev)
-    Write-Host 'Envia el archivo ERROR.txt si necesitas ayuda. No presentes una validacion fallida como aprobada.'
+    Write-Host 'Consulta el registro ERROR.txt antes de repetir la comprobacion.'
     exit 1
 }
