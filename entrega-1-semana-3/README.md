@@ -61,7 +61,12 @@ docker compose up -d
 Vuelve al navegador: las tareas deben permanecer. No uses `down -v`, porque elimina el volumen.
 Para detener el proyecto después de la demostración: `docker compose down`.
 
-## 5. Subir a GitHub sin usar Git
+## 5. Publicación GitHub
+La entrega ya está publicada en la rama entrega-1-semana-3 del repositorio DevelopingGeek.
+La carpeta entrega-1-semana-3 contiene el proyecto. Para usar el código clonado, entra en esa carpeta antes de ejecutar Docker Compose.
+Los pasos siguientes solo son necesarios si deseas crear otro repositorio.
+
+### Crear otro repositorio sin usar Git
 1. Ingresa a tu cuenta de https://github.com . Si no tienes cuenta, créala.
 2. Crea un repositorio llamado `gestor-tareas-integracion-continua`.
 3. Elige la visibilidad de acuerdo con la indicación del docente.
@@ -93,7 +98,8 @@ La prueba crea registros temporales, valida HTTP y la lectura directa de Redis y
 
 ## Estado de validación
 El archivo VALIDACION.md registra qué se verificó al preparar el proyecto.
-No se incluyen capturas ficticias ni se afirma que GitHub ya esté publicado.
+El código está publicado en una rama independiente: https://github.com/xChichoTop/DevelopingGeek/tree/entrega-1-semana-3/entrega-1-semana-3 .
+Se incluyen capturas reales de una ejecución local sin Docker. El intento Actions no inició el runner; falta validar los contenedores.
 Este ejemplo es local y académico; no incluye autenticación para publicarlo en Internet.
 
 ## Fuentes
@@ -107,7 +113,7 @@ Este ejemplo es local y académico; no incluye autenticación para publicarlo en
 El repositorio incluye `.github/workflows/verificar-docker.yml`.
 Al subirlo a main o master, GitHub puede ejecutar la construcción y comprobación en un runner Linux.
 Abre Actions, selecciona “Comprobar dos contenedores Docker” y revisa el resultado real.
-También puedes iniciarlo con Run workflow, gracias a workflow_dispatch.
+workflow_dispatch permite iniciarlo manualmente cuando GitHub registre el flujo para ejecución manual. Si solo está en una rama distinta de la predeterminada, usa el disparador push o repite la ejecución existente.
 El flujo genera el artefacto `evidencias-dos-contenedores` con construcción, estado, pruebas y persistencia.
 Si no aparece el flujo, comprueba que subiste la carpeta .github completa y que Actions esté habilitado.
 Un archivo de flujo preparado no equivale a una ejecución aprobada.
