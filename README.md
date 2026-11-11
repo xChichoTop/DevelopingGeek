@@ -1,9 +1,14 @@
-# Entrega 1 Semana 3
+# Gestor de tareas con Docker
 
-Estudiante: Johan Alvarez Parra. Docente: Edwar Reyes. Trabajo individual.
+Proyecto académico de Énfasis Profesional I (Integración Continua), entrega 1 de
+la semana 3, del Politécnico Grancolombiano.
 
-El proyecto está en [entrega-1-semana-3](entrega-1-semana-3/).
+**Estudiante:** Johan Alvarez Parra  
+**Docente:** Edwar Reyes
 
-Contiene el informe Word y PDF, dos servicios Docker, las pruebas y la guía PASO_A_PASO_ENTREGA.txt. El programa PREPARAR_ENTREGA.bat comprueba Docker real antes de generar el paquete definitivo.
+La aplicación implementa operaciones de registro, consulta y eliminación de tareas
+mediante dos servicios: una aplicación web con Flask y un almacenamiento Redis.
 
-La rama master conserva el proyecto anterior.
+[Código y documentación del proyecto](entrega-1-semana-3/)
+
+[Informe académico](entrega-1-semana-3/informe/)

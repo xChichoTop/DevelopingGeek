@@ -1,88 +1,86 @@
-# Gestor de tareas con dos contenedores Docker
+# Gestor de tareas con Docker
 
 **Estudiante:** Johan Alvarez Parra  
 **Docente:** Edwar Reyes  
 **Institución:** Politécnico Grancolombiano  
 **Módulo:** Énfasis Profesional I (Integración Continua)  
-**Entrega:** 1, semana 3. Trabajo individual.
+**Actividad:** Entrega 1, semana 3. Modalidad individual.
 
-La aplicación permite agregar, consultar y eliminar tareas. Tiene dos servicios:
+## Descripción
+
+Aplicación web para registrar, consultar y eliminar tareas. La solución separa el
+procesamiento HTTP y el almacenamiento mediante dos servicios Docker Compose.
 
 | Servicio | Tecnología | Función |
 |---|---|---|
-| web | Python 3.12, Flask y Gunicorn | Procesar solicitudes HTTP |
-| datos | Redis 7.4 Alpine | Guardar las tareas |
+| web | Python 3.12, Flask y Gunicorn | Interfaz web y procesamiento de solicitudes |
+| datos | Redis 7.4 Alpine | Almacenamiento de las tareas |
 
-Los servicios comparten la red `proyecto`. Web se conecta a `datos:6379`.
-El navegador accede a `http://localhost:5000`. Redis no publica puertos al equipo.
-El volumen `tareas` conserva los archivos AOF del almacenamiento.
+La comunicación utiliza `datos:6379` en la red `proyecto`. El servicio web publica
+el puerto `127.0.0.1:5000`; Redis se mantiene en la red interna de los servicios.
+El volumen `tareas` conserva los archivos de persistencia AOF de Redis.
 
-## Ejecución en Windows
+## Requisitos
 
-El proyecto requiere Docker Desktop con el motor iniciado.
-`INICIAR.bat` construye e inicia la aplicación. `VERIFICAR.bat` realiza la prueba
-básica. `DETENER.bat` apaga los servicios sin eliminar los datos.
+- Docker Engine o Docker Desktop con contenedores Linux.
+- Docker Compose con soporte para `--wait`.
+- Conexión a Internet para la descarga inicial de imágenes y dependencias.
 
-`PREPARAR_ENTREGA.bat` ejecuta la comprobación completa. Verifica dos servicios
-saludables, red compartida, nueve pruebas, lectura directa de Redis, recreación
-de contenedores y conservación de un registro. Si todos los controles pasan,
-genera un ZIP con el informe, el código y las evidencias de ejecución. Si un paso
-falla, guarda un registro ERROR.txt y detiene el proceso.
+## Ejecución
 
-## Ejecución manual
-
-En una terminal abierta en la carpeta del proyecto:
+Desde la carpeta que contiene `compose.yaml`:
 
 ```powershell
 docker compose up --build -d --wait
 docker compose ps
+```
+
+Interfaz: `http://localhost:5000`. Estado de conexión: `http://localhost:5000/salud`.
+
+## Pruebas
+
+```powershell
 docker compose exec -T web python comprobar.py
 docker compose exec -T datos redis-cli HGETALL tareas
 ```
 
-Para comprobar persistencia, registrar una tarea, ejecutar los siguientes comandos
-y volver a consultar la página:
+`comprobar.py` realiza nueve comprobaciones sobre HTTP y Redis: disponibilidad,
+conexión, validación de entradas, creación, lectura directa, presentación,
+escape de HTML y eliminación. Los registros temporales de prueba se eliminan
+al finalizar.
+
+La persistencia se verifica conservando una tarea después de recrear los servicios:
 
 ```powershell
 docker compose down
 docker compose up -d --wait
 ```
 
-No usar `down -v` si se desea conservar los datos: elimina el volumen.
+`docker compose down -v` elimina el volumen y sus datos.
 
-## Código publicado
+## Automatización en Windows
 
-[Carpeta de la entrega en GitHub](https://github.com/xChichoTop/DevelopingGeek/tree/entrega-1-semana-3/entrega-1-semana-3).
-La entrega está en una rama independiente; master conserva el proyecto anterior.
-Al clonar el repositorio, seleccionar la rama `entrega-1-semana-3` y entrar a la
-carpeta `entrega-1-semana-3` antes de ejecutar Docker Compose.
+`PREPARAR_ENTREGA.bat` ejecuta la comprobación completa del proyecto: construcción,
+estado saludable de ambos contenedores, red compartida, pruebas HTTP y Redis,
+recreación de los servicios y persistencia. Una ejecución satisfactoria genera un
+paquete con el informe, el código y los registros de esa ejecución.
 
-No es necesario crear otro repositorio ni volver a subir el código a GitHub.
+`INICIAR.bat`, `VERIFICAR.bat` y `DETENER.bat` permiten ejecutar las operaciones
+básicas por separado. Los resultados y su alcance se documentan en `VALIDACION.md`.
 
-## Estado de las pruebas
+## Estructura
 
-`VALIDACION.md` distingue las pruebas locales de las de Docker. Se incluyen nueve
-comprobaciones aprobadas con Redis real como proceso local y un ensayo de reinicio.
-Las capturas locales no se presentan como evidencia de contenedores.
+- `app.py`: rutas HTTP y acceso a Redis.
+- `templates/index.html`: interfaz web.
+- `Dockerfile`: imagen de la aplicación.
+- `compose.yaml`: servicios, red, volumen y comprobaciones de salud.
+- `comprobar.py`: pruebas de funcionamiento y comunicación.
+- `evidencias/`: registros y capturas identificados por su entorno de ejecución.
+- `informe/`: informe académico en Word y PDF.
 
-El flujo de GitHub Actions está preparado, pero su primer intento no inició el
-runner. No se dispone de una validación Docker aprobada en el entorno de preparación.
-`PREPARAR_ENTREGA.bat` obtiene esa evidencia en el computador donde se ejecute Docker.
-La automatización fue revisada por separado; eso tampoco equivale a ejecutar Docker.
-
-## Solución de problemas
-
-- Si Docker no responde, abrir Docker Desktop y esperar a que el motor esté activo.
-- Si el puerto 5000 está ocupado, cambiar en `compose.yaml` la publicación a
-  `127.0.0.1:5001:5000`. La aplicación se abrirá manualmente en localhost:5001.
-  La comprobación interna continúa usando el puerto 5000 del contenedor.
-- Si falla la descarga de imágenes, revisar Internet y repetir el inicio.
-- Consultar `docker compose logs web datos` para diagnosticar errores.
-- Después de modificar Python, reconstruir con `docker compose up --build -d --wait`.
-
-## Fuentes
+## Referencias
 
 - Politécnico Grancolombiano. Guía del proyecto, entrega 1, semana 3.
-- Oliveros Acosta, E. E. Lectura fundamental del escenario 3, *Máquinas virtuales y Dockers para construcción de ambientes*.
+- Oliveros Acosta, E. E. *Máquinas virtuales y Dockers para construcción de ambientes*. Lectura fundamental del escenario 3.
 - Docker. [Networking in Compose](https://docs.docker.com/compose/how-tos/networking/).
 - Docker. [Control startup and shutdown order in Compose](https://docs.docker.com/compose/how-tos/startup-order/).

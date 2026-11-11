@@ -1,27 +1,35 @@
-# Estado real de validación
+# Validación del proyecto
 
-## Realizado
-- Revisada la configuración YAML: dos servicios, red común, host datos y volumen tareas.
-- Ejecutadas nueve comprobaciones sobre HTTP con Gunicorn y un servidor Redis real local: interfaz, conexión, entradas vacías, longitud, creación, lectura directa en Redis, consulta visible, escape HTML y eliminación.
-- Reiniciado el servidor Redis real y confirmada la conservación de los dos registros mediante AOF.
-- Obtenidas capturas reales de la interfaz y del endpoint de salud en esa ejecución local.
+## Pruebas locales
 
-## Alcance de estas pruebas
-Las evidencias de esta carpeta proceden de procesos locales, sin Docker. El servidor Redis de la prueba local es 6.2.14; compose.yaml solicita Redis 7.4 Alpine. La prueba local no demuestra la construcción de la imagen 7.4, la red de Docker ni el volumen de Docker.
+La aplicación se comprobó mediante solicitudes HTTP a Gunicorn y un servidor
+Redis 6.2.14 ejecutado como proceso local. Se aprobaron nueve pruebas de
+funcionamiento y se verificó la conservación de dos registros tras reiniciar
+Redis con persistencia AOF.
 
-## GitHub
-El código está publicado en https://github.com/xChichoTop/DevelopingGeek/tree/entrega-1-semana-3/entrega-1-semana-3 .
-La ejecución Actions 42946871111 terminó sin iniciar el runner ni ejecutar pasos. No hay resultados Docker aprobados.
+Los archivos `pruebas_http_redis_real.json`, `datos_redis_real.json` y
+`persistencia_redis_real.json` registran esos resultados. Las imágenes cuyos
+nombres contienen `ejecucion_local` corresponden a ese mismo entorno.
 
-## Pendiente
-- Construir e iniciar la composición en un motor Docker y comprobar ambos servicios.
-- Verificar comunicación entre contenedores y persistencia del volumen en Docker.
+## Alcance
 
+Las pruebas locales no acreditan la construcción de imágenes, la red ni el
+volumen de Docker. `compose.yaml` configura Redis 7.4 Alpine; esa imagen requiere
+su propia ejecución y comprobación. No se dispone de un resultado Docker
+aprobado en las evidencias publicadas actualmente.
 
-## Automatización preparada
-.github/workflows/verificar-docker.yml permite ejecutar esas comprobaciones de Docker en GitHub Actions después de subir el repositorio. El primer intento del flujo no inició los pasos de construcción. Genera un artefacto llamado evidencias-dos-contenedores con registros reales. También puede validarse en Windows mediante INICIAR.bat y VERIFICAR.bat.
+## Comprobación en contenedores
 
-## Comprobación automatizada
-PREPARAR_ENTREGA.bat genera el resultado de Docker únicamente después de aprobar los controles de estado, red, comunicación y persistencia. El registro resultado_docker.json identifica la fecha y los contenedores de esa ejecución.
+`PREPARAR_ENTREGA.bat` comprueba la configuración, construye la imagen web e inicia
+los dos servicios. Verifica sus estados, la red compartida, las nueve pruebas,
+la lectura directa de Redis y la persistencia después de recrear los contenedores.
 
-Las pruebas del programa de comprobación y las pruebas locales de la aplicación no sustituyen la ejecución real de los contenedores.
+Una ejecución satisfactoria genera `resultado_docker.json`, con fecha,
+identificadores de contenedor, red, volumen y resultados. Los registros se
+incluyen en la carpeta `evidencias_docker` del paquete generado.
+
+## GitHub Actions
+
+El flujo `.github/workflows/verificar-docker.yml` define la construcción y las
+comprobaciones en un runner Linux. La ejecución inicial 42946871111 no inició
+el runner ni ejecutó los pasos; no constituye evidencia de pruebas aprobadas.

@@ -94,6 +94,8 @@ try {
         if ($item.Extension -eq '.zip') { continue }
         Copy-Item -LiteralPath $item.FullName -Destination $code -Recurse -Force
     }
+    $validation = "# Validacion de la ejecucion en Docker`r`n`r`nFecha: " + $proof.fecha + "`r`nAutor: Johan Alvarez Parra`r`n`r`nResultado: APROBADA.`r`nDos servicios saludables: web y datos.`r`nNueve pruebas de funcionamiento y comunicacion aprobadas.`r`nLectura directa de Redis coincidente con la escritura desde web.`r`nPersistencia confirmada despues de recrear los contenedores.`r`n`r`nLos registros se incluyen en ../evidencias_docker/. Las capturas y los archivos de evidencias con nombres de ejecucion local corresponden a un ensayo separado sin Docker."
+    [System.IO.File]::WriteAllText((Join-Path $code 'VALIDACION.md'), $validation, $utf8)
     $localEvidence = Join-Path $code 'evidencias'
     New-Item -ItemType Directory -Path $localEvidence -Force | Out-Null
     foreach ($name in @('LEEME.md','interfaz_ejecucion_local.png','salud_ejecucion_local.png','pruebas_http_redis_real.json','datos_redis_real.json','persistencia_redis_real.json')) {
