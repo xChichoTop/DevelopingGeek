@@ -1,0 +1,8 @@
+{
+  "entorno": "Procesos locales sin Docker",
+  "version_redis": "6.2.14",
+  "registros_antes": 2,
+  "registros_despues": 2,
+  "datos_identicos": true,
+  "resultado": "APROBADA"
+}

@@ -1,0 +1,44 @@
+name: Comprobar dos contenedores Docker
+on:
+  push:
+    branches: [main, master, entrega-1-semana-3]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verificar:
+    defaults:
+      run:
+        working-directory: entrega-1-semana-3
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validar y construir los dos servicios
+        run: |
+          mkdir -p evidencias/ejecucion-docker
+          docker compose config --quiet
+          docker compose up --build -d --wait 2>&1 | tee evidencias/ejecucion-docker/construccion.txt
+      - name: Comprobar comunicacion real entre contenedores
+        run: |
+          docker compose ps | tee evidencias/ejecucion-docker/estado.txt
+          docker compose exec -T web python comprobar.py | tee evidencias/ejecucion-docker/pruebas.json
+          docker compose exec -T web python -c "from app import db; db.hset('tareas', 'persistencia_ci', 'Verificar persistencia Docker')"
+          docker compose exec -T datos redis-cli HGETALL tareas | tee evidencias/ejecucion-docker/datos_antes.txt
+      - name: Recrear contenedores y verificar volumen
+        run: |
+          docker compose down
+          docker compose up -d --wait
+          docker compose exec -T web python -c "from app import db; assert db.hget('tareas', 'persistencia_ci') == 'Verificar persistencia Docker'; print('APROBADA: tarea conservada al recrear los contenedores')" | tee evidencias/ejecucion-docker/persistencia.txt
+          docker compose exec -T datos redis-cli HGETALL tareas > evidencias/ejecucion-docker/datos_despues.txt
+      - name: Conservar registros y apagar
+        if: always()
+        run: |
+          mkdir -p evidencias/ejecucion-docker
+          docker compose logs --no-color > evidencias/ejecucion-docker/registros.txt 2>&1
+          docker compose down
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: evidencias-dos-contenedores
+          path: entrega-1-semana-3/evidencias/ejecucion-docker/

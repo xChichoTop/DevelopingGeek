@@ -1,0 +1,41 @@
+{
+  "pruebas": [
+    {
+      "prueba": "Interfaz HTTP disponible",
+      "resultado": "APROBADA"
+    },
+    {
+      "prueba": "Conexion real con Redis",
+      "resultado": "APROBADA"
+    },
+    {
+      "prueba": "Rechazo de tarea vacia",
+      "resultado": "APROBADA"
+    },
+    {
+      "prueba": "Rechazo de mas de 120 caracteres",
+      "resultado": "APROBADA"
+    },
+    {
+      "prueba": "Creacion por HTTP",
+      "resultado": "APROBADA"
+    },
+    {
+      "prueba": "Lectura directa en Redis del registro creado",
+      "resultado": "APROBADA"
+    },
+    {
+      "prueba": "Consulta visible en interfaz",
+      "resultado": "APROBADA"
+    },
+    {
+      "prueba": "Escape de HTML en interfaz",
+      "resultado": "APROBADA"
+    },
+    {
+      "prueba": "Eliminacion por HTTP",
+      "resultado": "APROBADA"
+    }
+  ],
+  "total": 9
+}

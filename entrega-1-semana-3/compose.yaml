@@ -1,0 +1,37 @@
+name: entrega1
+services:
+  web:
+    build: .
+    ports:
+      - "127.0.0.1:5000:5000"
+    environment:
+      REDIS_HOST: datos
+    depends_on:
+      datos:
+        condition: service_healthy
+    networks:
+      - proyecto
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5000/salud', timeout=4)"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+  datos:
+    image: redis:7.4-alpine
+    command: ["redis-server", "--appendonly", "yes", "--appendfsync", "always"]
+    volumes:
+      - tareas:/data
+    networks:
+      - proyecto
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+networks:
+  proyecto:
+    driver: bridge
+volumes:
+  tareas:
