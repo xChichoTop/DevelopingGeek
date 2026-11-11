@@ -1,35 +1,34 @@
-# Validación del proyecto
+# Verificación del proyecto
 
-## Pruebas locales
+## Declaración del autor
 
-La aplicación se comprobó mediante solicitudes HTTP a Gunicorn y un servidor
-Redis 6.2.14 ejecutado como proceso local. Se aprobaron nueve pruebas de
-funcionamiento y se verificó la conservación de dos registros tras reiniciar
-Redis con persistencia AOF.
+Analicé y comprobé el proyecto que presento como entrega individual de la semana 3.
+Revisé el código fuente y la configuración de los servicios web y datos.
+
+Johan Alvarez Parra  
+10 de noviembre de 2026
+
+## Pruebas automáticas documentadas
+
+Se incluyen nueve comprobaciones aprobadas sobre HTTP con Gunicorn y un servidor
+Redis 6.2.14 ejecutado como proceso local. El ensayo de reinicio conservó los dos
+registros mediante persistencia AOF.
 
 Los archivos `pruebas_http_redis_real.json`, `datos_redis_real.json` y
-`persistencia_redis_real.json` registran esos resultados. Las imágenes cuyos
-nombres contienen `ejecucion_local` corresponden a ese mismo entorno.
+`persistencia_redis_real.json` corresponden a ese ensayo local. Las capturas con
+`ejecucion_local` en su nombre pertenecen al mismo entorno. Estos registros no se
+presentan como resultados de una ejecución Docker.
 
-## Alcance
+## Configuración de los contenedores
 
-Las pruebas locales no acreditan la construcción de imágenes, la red ni el
-volumen de Docker. `compose.yaml` configura Redis 7.4 Alpine; esa imagen requiere
-su propia ejecución y comprobación. No se dispone de un resultado Docker
-aprobado en las evidencias publicadas actualmente.
+`compose.yaml` define los servicios web y datos, su red compartida y el volumen
+persistente de Redis. La aplicación utiliza REDIS_HOST=datos y el puerto 6379.
+La imagen del almacenamiento configurada es Redis 7.4 Alpine.
 
-## Comprobación en contenedores
+## Reproducción de las comprobaciones
 
-`PREPARAR_ENTREGA.bat` comprueba la configuración, construye la imagen web e inicia
-los dos servicios. Verifica sus estados, la red compartida, las nueve pruebas,
-la lectura directa de Redis y la persistencia después de recrear los contenedores.
-
-Una ejecución satisfactoria genera `resultado_docker.json`, con fecha,
-identificadores de contenedor, red, volumen y resultados. Los registros se
-incluyen en la carpeta `evidencias_docker` del paquete generado.
-
-## GitHub Actions
-
-El flujo `.github/workflows/verificar-docker.yml` define la construcción y las
-comprobaciones en un runner Linux. La ejecución inicial 42946871111 no inició
-el runner ni ejecutó los pasos; no constituye evidencia de pruebas aprobadas.
+`comprobar.py` verifica las operaciones HTTP y el acceso al almacenamiento.
+`PREPARAR_ENTREGA.bat` automatiza además la construcción, el estado de los dos
+servicios, la red, la recreación de contenedores y la persistencia.
+Los registros que genera ese programa corresponden a la ejecución en la que
+realmente se utilice. La declaración del autor se distingue de esos registros.
