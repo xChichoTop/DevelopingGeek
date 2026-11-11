@@ -1,119 +1,91 @@
-# Gestor de tareas - Entrega 1, semana 3
+# Gestor de tareas con dos contenedores Docker
 
-Proyecto académico para Énfasis Profesional I (Integración Continua).
-Permite agregar, consultar y eliminar tareas. Usa exactamente dos servicios:
-- `web`: aplicación Python/Flask, imagen construida con Dockerfile.
-- `datos`: Redis, base de datos clave-valor, imagen oficial.
+**Estudiante:** Johan Alvarez Parra  
+**Docente:** Edwar Reyes  
+**Institución:** Politécnico Grancolombiano  
+**Módulo:** Énfasis Profesional I (Integración Continua)  
+**Entrega:** 1, semana 3. Trabajo individual.
 
-La comunicación ocurre entre `web` y `datos:6379` en la red `proyecto`.
-Dentro de web, localhost sería el propio contenedor: por eso REDIS_HOST es datos.
-Redis no publica puertos al equipo. El navegador accede a web en localhost:5000.
-El volumen `tareas` conserva los datos al recrear contenedores.
+La aplicación permite agregar, consultar y eliminar tareas. Tiene dos servicios:
 
-## 1. Preparar el computador (Windows)
-Instala Docker Desktop desde https://www.docker.com/products/docker-desktop/ .
-Sigue sus indicaciones de WSL 2/virtualización si las solicita y reinicia cuando corresponda.
-Abre Docker Desktop y espera a que el motor esté activo.
-Extrae este ZIP. Abre la carpeta que contiene compose.yaml en el Explorador,
-escribe `powershell` en la barra de direcciones y presiona Enter.
-Comprueba:
+| Servicio | Tecnología | Función |
+|---|---|---|
+| web | Python 3.12, Flask y Gunicorn | Procesar solicitudes HTTP |
+| datos | Redis 7.4 Alpine | Guardar las tareas |
+
+Los servicios comparten la red `proyecto`. Web se conecta a `datos:6379`.
+El navegador accede a `http://localhost:5000`. Redis no publica puertos al equipo.
+El volumen `tareas` conserva los archivos AOF del almacenamiento.
+
+## Inicio rápido en Windows
+
+1. Extraer el ZIP y abrir Docker Desktop.
+2. Abrir la carpeta que contiene `compose.yaml`.
+3. Ejecutar `PREPARAR_ENTREGA.bat` con doble clic.
+4. Esperar el mensaje **VALIDACION DOCKER APROBADA**.
+5. Subir el ZIP que se genera dentro de `entrega_para_subir`, siguiendo `PASO_A_PASO_ENTREGA.txt`.
+
+El programa comprueba dos servicios saludables, red compartida, nueve pruebas,
+lectura directa de Redis, recreación de contenedores y conservación del registro.
+Si un paso falla, guarda `ERROR.txt` y no genera un paquete aprobado de ese intento.
+
+`INICIAR.bat` solo inicia la aplicación. `VERIFICAR.bat` realiza la prueba básica.
+`DETENER.bat` apaga los servicios. La comprobación completa es `PREPARAR_ENTREGA.bat`.
+
+## Ejecución manual
+
+En una terminal abierta en la carpeta del proyecto:
 
 ```powershell
-docker --version
-docker compose version
-```
-
-## Atajo para Windows
-Con Docker Desktop abierto, haz doble clic en INICIAR.bat.
-Luego puedes hacer doble clic en VERIFICAR.bat para guardar registros reales en evidencias.
-DETENER.bat apaga los contenedores sin borrar las tareas.
-Si usas otro puerto, abre manualmente la dirección que hayas configurado.
-
-## 2. Construir e iniciar
-En esa misma carpeta:
-
-```powershell
-docker compose up --build -d
+docker compose up --build -d --wait
 docker compose ps
+docker compose exec -T web python comprobar.py
+docker compose exec -T datos redis-cli HGETALL tareas
 ```
 
-La primera ejecución necesita Internet para descargar imágenes y dependencias.
-Abre http://localhost:5000 . Agrega dos tareas de prueba.
-
-## 3. Comprobar la comunicación
-
-```powershell
-docker compose exec web python -c "from app import db; print(db.ping()); print(db.hgetall('tareas'))"
-docker compose exec datos redis-cli HGETALL tareas
-```
-
-El primer comando debe mostrar True y las tareas. El segundo debe mostrar
-los mismos identificadores y títulos. Son resultados esperados: obtén tus propias evidencias.
-Abre también http://localhost:5000/salud : debe indicar estado ok.
-
-## 4. Comprobar persistencia
+Para comprobar persistencia, registrar una tarea, ejecutar los siguientes comandos
+y volver a consultar la página:
 
 ```powershell
 docker compose down
-docker compose up -d
+docker compose up -d --wait
 ```
 
-Vuelve al navegador: las tareas deben permanecer. No uses `down -v`, porque elimina el volumen.
-Para detener el proyecto después de la demostración: `docker compose down`.
+No usar `down -v` si se desea conservar los datos: elimina el volumen.
 
-## 5. Publicación GitHub
-La entrega ya está publicada en la rama entrega-1-semana-3 del repositorio DevelopingGeek.
-La carpeta entrega-1-semana-3 contiene el proyecto. Para usar el código clonado, entra en esa carpeta antes de ejecutar Docker Compose.
-Los pasos siguientes solo son necesarios si deseas crear otro repositorio.
+## Código publicado
 
-### Crear otro repositorio sin usar Git
-1. Ingresa a tu cuenta de https://github.com . Si no tienes cuenta, créala.
-2. Crea un repositorio llamado `gestor-tareas-integracion-continua`.
-3. Elige la visibilidad de acuerdo con la indicación del docente.
-4. Usa “uploading an existing file” o “Add file > Upload files”.
-5. Sube los archivos y la carpeta templates, no el ZIP. Dockerfile y compose.yaml
-   deben quedar en la raíz. Incluye .gitignore y .dockerignore (pueden estar ocultos).
-6. Guarda los cambios con el mensaje “Entrega 1: aplicación y dos contenedores comunicados”.
-7. Copia la dirección real del repositorio al informe.
+[Carpeta de la entrega en GitHub](https://github.com/xChichoTop/DevelopingGeek/tree/entrega-1-semana-3/entrega-1-semana-3).
+La entrega está en una rama independiente; master conserva el proyecto anterior.
+Al clonar el repositorio, seleccionar la rama `entrega-1-semana-3` y entrar a la
+carpeta `entrega-1-semana-3` antes de ejecutar Docker Compose.
 
-## 6. Evidencias que debes capturar
-- Repositorio de GitHub mostrando los archivos y el commit.
-- `docker compose up --build -d`: construcción e inicio sin errores.
-- `docker compose ps`: los dos servicios activos y saludables.
-- Navegador con dos tareas creadas.
-- Los dos comandos de comunicación con los mismos datos.
-- Persistencia después de detener y volver a iniciar.
+No es necesario crear otro repositorio ni volver a subir el código a GitHub.
 
-## Dificultades frecuentes
-- No conecta con Docker: abre Docker Desktop y espera el inicio del motor.
-- Puerto 5000 ocupado: cambia en compose.yaml solo el primer 5000 por 5001
-  (`127.0.0.1:5001:5000`), ejecuta `docker compose up -d` y abre localhost:5001.
-- Error de descarga: verifica conexión a Internet y vuelve a ejecutar el inicio.
-- Para diagnosticar: `docker compose logs web datos`.
-- Si modificas app.py, reconstruye con `docker compose up --build -d`.
+## Estado de las pruebas
 
-## Prueba automática
-Con los contenedores iniciados, ejecuta `docker compose exec -T web python comprobar.py`.
-La prueba crea registros temporales, valida HTTP y la lectura directa de Redis y elimina sus registros al terminar.
+`VALIDACION.md` distingue las pruebas locales de las de Docker. Se incluyen nueve
+comprobaciones aprobadas con Redis real como proceso local y un ensayo de reinicio.
+Las capturas locales no se presentan como evidencia de contenedores.
 
-## Estado de validación
-El archivo VALIDACION.md registra qué se verificó al preparar el proyecto.
-El código está publicado en una rama independiente: https://github.com/xChichoTop/DevelopingGeek/tree/entrega-1-semana-3/entrega-1-semana-3 .
-Se incluyen capturas reales de una ejecución local sin Docker. El intento Actions no inició el runner; falta validar los contenedores.
-Este ejemplo es local y académico; no incluye autenticación para publicarlo en Internet.
+El flujo de GitHub Actions está preparado, pero su primer intento no inició el
+runner. No se dispone de una validación Docker aprobada en el entorno de preparación.
+`PREPARAR_ENTREGA.bat` obtiene esa evidencia en el computador donde se ejecute Docker.
+La automatización fue revisada por separado; eso tampoco equivale a ejecutar Docker.
+
+## Solución de problemas
+
+- Si Docker no responde, abrir Docker Desktop y esperar a que el motor esté activo.
+- Si el puerto 5000 está ocupado, cambiar en `compose.yaml` la publicación a
+  `127.0.0.1:5001:5000`. La aplicación se abrirá manualmente en localhost:5001.
+  La comprobación interna continúa usando el puerto 5000 del contenedor.
+- Si falla la descarga de imágenes, revisar Internet y repetir el inicio.
+- Consultar `docker compose logs web datos` para diagnosticar errores.
+- Después de modificar Python, reconstruir con `docker compose up --build -d --wait`.
 
 ## Fuentes
-- Politécnico Grancolombiano. Guía “Proyecto de software basado en herramientas de integración continua”, entrega 1, semana 3.
-- Oliveros Acosta, Eduardo Enrique. “Máquinas virtuales y Dockers para construcción de ambientes”, lectura fundamental, escenario 3, Politécnico Grancolombiano.
-- Docker. Networking in Compose. https://docs.docker.com/compose/how-tos/networking/
-- Docker. Control startup and shutdown order in Compose. https://docs.docker.com/compose/how-tos/startup-order/
-- Docker. Docker Compose Quickstart. https://docs.docker.com/compose/gettingstarted/
 
-## Comprobar Docker desde GitHub Actions
-El repositorio incluye `.github/workflows/verificar-docker.yml`.
-Al subirlo a main o master, GitHub puede ejecutar la construcción y comprobación en un runner Linux.
-Abre Actions, selecciona “Comprobar dos contenedores Docker” y revisa el resultado real.
-workflow_dispatch permite iniciarlo manualmente cuando GitHub registre el flujo para ejecución manual. Si solo está en una rama distinta de la predeterminada, usa el disparador push o repite la ejecución existente.
-El flujo genera el artefacto `evidencias-dos-contenedores` con construcción, estado, pruebas y persistencia.
-Si no aparece el flujo, comprueba que subiste la carpeta .github completa y que Actions esté habilitado.
-Un archivo de flujo preparado no equivale a una ejecución aprobada.
+- Politécnico Grancolombiano. Guía del proyecto, entrega 1, semana 3.
+- Oliveros Acosta, E. E. Lectura fundamental del escenario 3, *Máquinas virtuales y Dockers para construcción de ambientes*.
+- Docker. [Networking in Compose](https://docs.docker.com/compose/how-tos/networking/).
+- Docker. [Control startup and shutdown order in Compose](https://docs.docker.com/compose/how-tos/startup-order/).

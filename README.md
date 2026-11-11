@@ -1,7 +1,9 @@
 # Entrega 1 Semana 3
 
+Estudiante: Johan Alvarez Parra. Docente: Edwar Reyes. Trabajo individual.
+
 El proyecto está en [entrega-1-semana-3](entrega-1-semana-3/).
 
-Esta rama contiene la entrega académica con dos servicios Docker. La rama master conserva el proyecto anterior.
+Contiene el informe Word y PDF, dos servicios Docker, las pruebas y la guía PASO_A_PASO_ENTREGA.txt. El programa PREPARAR_ENTREGA.bat comprueba Docker real antes de generar el paquete definitivo.
 
-Para ejecutarlo, entra en la carpeta entrega-1-semana-3 y sigue README.md. El flujo Actions comprueba construcción, comunicación y persistencia.
+La rama master conserva el proyecto anterior.

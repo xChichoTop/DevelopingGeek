@@ -8,7 +8,7 @@ from uuid import uuid4
 from redis import Redis
 
 base = os.getenv('WEB_URL', 'http://127.0.0.1:5000')
-db = Redis(host=os.getenv('REDIS_HOST', 'datos'), decode_responses=True)
+db = Redis(host=os.getenv('REDIS_HOST', 'datos'), decode_responses=True, socket_connect_timeout=3, socket_timeout=3)
 results = []
 
 def get(path):
@@ -42,7 +42,7 @@ try:
     check('Consulta visible en interfaz', title in get('/')[1])
     unsafe = prefix + ' <script>alert(1)</script>'
     post('/tareas', unsafe)
-    check('Escape de HTML en interfaz', '&lt;script&gt;alert(1)&lt;/script&gt;' in get('/')[1])
+    check('Escape de HTML en interfaz', '&lt;script&gt;alert(1)&lt;/script&gt;' in get('/')[1] and unsafe not in get('/')[1])
     check('Eliminacion por HTTP', post('/tareas/' + key + '/eliminar')[0] == 200 and not db.hexists('tareas', key))
 finally:
     for key, value in db.hgetall('tareas').items():

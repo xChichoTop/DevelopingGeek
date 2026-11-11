@@ -1,11 +1,17 @@
-ENTREGA 1 - SEMANA 3
+Johan Alvarez Parra - Entrega 1 Semana 3
+Profesor: Edwar Reyes
 
-1. Lee el informe en la carpeta informe. Completa los nombres de integrantes y docente.
-2. Para comprobar Docker en tu computador: instala y abre Docker Desktop; haz doble clic en INICIAR.bat y luego VERIFICAR.bat.
-3. El código ya está publicado: https://github.com/xChichoTop/DevelopingGeek/tree/entrega-1-semana-3/entrega-1-semana-3 . Entra en esa carpeta para ver el proyecto. La rama master se conserva.
-4. En GitHub abre Actions > Comprobar dos contenedores Docker. Espera la ejecución. Si finaliza correctamente, descarga el artefacto evidencias-dos-contenedores.
-5. Agrega al informe la URL real del repositorio y los resultados de Docker. Cambia el estado pendiente únicamente después de observar los resultados reales.
-6. Entrega el informe y el enlace al repositorio. Adjunta el ZIP si el aula lo permite.
+Lee PASO_A_PASO_ENTREGA.txt.
+Abre Docker Desktop y haz doble clic en PREPARAR_ENTREGA.bat.
+El programa comprueba los dos contenedores y solo genera el ZIP definitivo
+si todas las verificaciones pasan. Los nombres ya estan completos.
 
-ESTADO ACTUAL
-El código está desarrollado y probado con Redis real local. Se incluyen capturas y resultados reales de esa ejecución. La publicación en GitHub está confirmada. La ejecución Docker sigue pendiente: Actions no llegó a iniciar el runner. En tu computador puedes usar INICIAR.bat y VERIFICAR.bat. No presentar las capturas locales como si fueran Docker.
+El ZIP definitivo se guarda dentro de entrega_para_subir, en una subcarpeta
+con fecha e identificador. Ese es el archivo que debes subir al aula.
+
+Antes de ejecutar esa comprobacion, el proyecto tiene pruebas reales locales,
+pero no una validacion Docker aprobada. El bloqueo de GitHub Actions no impide
+hacer la prueba en Docker Desktop.
+
+Codigo publicado:
+https://github.com/xChichoTop/DevelopingGeek/tree/entrega-1-semana-3/entrega-1-semana-3

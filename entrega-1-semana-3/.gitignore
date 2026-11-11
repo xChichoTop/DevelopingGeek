@@ -2,3 +2,6 @@
 __pycache__/
 *.pyc
 .env
+
+entrega_para_subir/
+evidencias/docker-*/
