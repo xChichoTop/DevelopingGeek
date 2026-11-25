@@ -1,0 +1,15 @@
+{
+  "fecha_utc": "2026-11-25T03:01:00.129394+00:00",
+  "jenkins": "2.580.2",
+  "java": "openjdk version \"21.0.13.1\" 2026-11-17",
+  "job": "Verificacion-GitHub-semana-5",
+  "numero": 1,
+  "resultado": "SUCCESS",
+  "duracion_ms": 13358,
+  "total_pruebas": 13,
+  "fallidas": 0,
+  "omitidas": 0,
+  "alcance": "Pipeline de verificación con checkout SCM desde GitHub y procesos reales de Gunicorn y Redis. Sin Docker.",
+  "jenkinsfile_docker": "Validado con el linter declarativo del controlador; no ejecutado con Docker.",
+  "revision": "36bfe0b7d906e3722bd9a0bb45d5b9ba3c3f0673"
+}

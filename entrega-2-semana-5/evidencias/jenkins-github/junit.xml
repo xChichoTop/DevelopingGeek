@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="HTTP y Redis" tests="12" failures="0" errors="0" timestamp="2026-11-25T03:00:57.544024+00:00">
+  <testcase classname="Integracion" name="test_01_interfaz_disponible" time="0.012457" />
+  <testcase classname="Integracion" name="test_02_salud_y_conteo_reales" time="0.003862" />
+  <testcase classname="Integracion" name="test_03_rechazar_titulo_vacio" time="0.003199" />
+  <testcase classname="Integracion" name="test_04_rechazar_mas_de_120_caracteres" time="0.004851" />
+  <testcase classname="Integracion" name="test_05_eliminar_espacios_en_extremos" time="0.004063" />
+  <testcase classname="Integracion" name="test_06_aceptar_limite_de_120_caracteres" time="0.003091" />
+  <testcase classname="Integracion" name="test_07_crear_por_http_y_leer_en_redis" time="0.003051" />
+  <testcase classname="Integracion" name="test_08_consultar_tarea_en_interfaz" time="0.008053" />
+  <testcase classname="Integracion" name="test_09_escapar_html" time="0.005504" />
+  <testcase classname="Integracion" name="test_10_eliminar_tarea_por_http" time="0.006784" />
+  <testcase classname="Integracion" name="test_11_eliminar_identificador_inexistente" time="0.002445" />
+  <testcase classname="Integracion" name="test_12_rechazar_solicitud_mayor_a_4096_bytes" time="0.002992" />
+</testsuite>

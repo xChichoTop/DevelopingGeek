@@ -73,6 +73,8 @@ Los volúmenes conservan la configuración de Jenkins y las tareas. `down --volu
 
 En `evidencias/` se incluyen la validación real del Jenkinsfile con el linter de Jenkins 2.580.2 y una ejecución satisfactoria de un pipeline de comprobación local. Esta ejecución publicó 13 pruebas mediante JUnit y utilizó procesos reales de Gunicorn y Redis, sin contenedores y sin checkout SCM. El archivo `ci/Jenkinsfile.local` contiene ese pipeline de comprobación previa.
 
+Se realizó una segunda ejecución en Jenkins, `Verificacion-GitHub-semana-5`, que obtuvo `ci/Jenkinsfile.local` y el código desde la rama `entrega-2-semana-5` en GitHub (commit `36bfe0b7d906e3722bd9a0bb45d5b9ba3c3f0673`). Finalizó con `SUCCESS` y publicó 13 pruebas aprobadas, sin fallas ni omisiones. Las evidencias están en `evidencias/jenkins-github/`. La ejecución utilizó procesos locales; las actualizaciones posteriores corresponden a documentación y evidencias.
+
 La ejecución completa del Jenkinsfile principal con Docker debe comprobarse en el equipo del laboratorio. La validación de sintaxis y los resultados locales no sustituyen esa ejecución. Los archivos de evidencia identifican el alcance y las versiones utilizadas.
 
 Para repetir la comprobación previa en un nodo Linux con Python 3.12, dependencias de `requirements.txt` y `redis-server` en PATH:
