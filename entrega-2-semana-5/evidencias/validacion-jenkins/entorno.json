@@ -1,0 +1,12 @@
+{
+  "fecha_utc": "2026-11-25T02:36:18.700136+00:00",
+  "entorno": "Procesos locales de Gunicorn y Redis sin contenedores",
+  "python": "3.12.14",
+  "flask": "3.1.2",
+  "redis_cliente": "6.4.0",
+  "gunicorn": "23.0.0",
+  "redis_servidor": "Redis server v=6.2.14 sha=40305114:0 malloc=libc bits=64 build=dff95a8e7a99d269",
+  "pruebas_http_redis": 12,
+  "pruebas_persistencia": 1,
+  "resultado": "APROBADA"
+}

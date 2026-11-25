@@ -1,0 +1,106 @@
+pipeline {
+    agent any
+    options {
+        skipDefaultCheckout(true)
+        disableConcurrentBuilds()
+        timestamps()
+        timeout(time: 20, unit: 'MINUTES')
+        buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
+    }
+    triggers {
+        pollSCM('H/5 * * * *')
+    }
+    environment {
+        PROYECTO = 'entrega-2-semana-5'
+        COMPOSE_FILE = 'compose.ci.yaml'
+    }
+    stages {
+        stage('Obtener codigo') {
+            steps {
+                deleteDir()
+                checkout scm
+                script {
+                    env.COMPOSE_PROJECT_NAME = env.BUILD_TAG.toLowerCase().replaceAll('[^a-z0-9_-]', '-')
+                }
+            }
+        }
+        stage('Validar configuracion') {
+            steps {
+                dir(env.PROYECTO) {
+                    sh '''
+                        mkdir -p reportes
+                        git rev-parse HEAD > reportes/commit.txt
+                        docker version > reportes/docker-version.txt
+                        docker compose version > reportes/compose-version.txt
+                        docker compose config > reportes/compose-validado.yaml
+                    '''
+                }
+            }
+        }
+        stage('Construir imagen') {
+            steps {
+                dir(env.PROYECTO) {
+                    sh 'docker compose build --pull'
+                }
+            }
+        }
+        stage('Iniciar servicios') {
+            steps {
+                dir(env.PROYECTO) {
+                    sh 'docker compose up --detach --wait --wait-timeout 120'
+                }
+            }
+        }
+        stage('Probar aplicacion') {
+            steps {
+                dir(env.PROYECTO) {
+                    sh 'docker compose exec -T web python ci/pruebas_ci.py --salida /tmp/reportes'
+                }
+            }
+        }
+        stage('Comprobar persistencia') {
+            steps {
+                dir(env.PROYECTO) {
+                    sh '''
+                        docker compose exec -T web python ci/persistencia.py guardar
+                        docker compose up --detach --force-recreate --no-deps --wait --wait-timeout 120 datos
+                        docker compose exec -T web python ci/persistencia.py verificar
+                    '''
+                }
+            }
+        }
+    }
+    post {
+        always {
+            script {
+                if (env.COMPOSE_PROJECT_NAME) {
+                    dir(env.PROYECTO) {
+                        sh(returnStatus: true, script: '''
+                            mkdir -p reportes
+                            docker compose logs --no-color > reportes/contenedores.log 2>&1
+                            docker compose ps --all > reportes/estado.txt 2>&1
+                            docker compose cp web:/tmp/reportes/. reportes/
+                        ''')
+                        if (fileExists('reportes/junit.xml') || fileExists('reportes/junit-persistencia.xml')) {
+                            junit(testResults: 'reportes/junit*.xml', allowEmptyResults: false, skipPublishingChecks: true)
+                        }
+                        archiveArtifacts(artifacts: 'reportes/**', allowEmptyArchive: false, fingerprint: true)
+                        if (currentBuild.currentResult == 'SUCCESS' &&
+                            (!fileExists('reportes/junit.xml') || !fileExists('reportes/junit-persistencia.xml'))) {
+                            error('No se publicaron los dos informes JUnit requeridos')
+                        }
+                    }
+                }
+            }
+        }
+        cleanup {
+            script {
+                if (env.COMPOSE_PROJECT_NAME) {
+                    dir(env.PROYECTO) {
+                        sh 'docker compose down --volumes --remove-orphans'
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,27 @@
+pipeline {
+    agent any
+    options {
+        disableConcurrentBuilds()
+        timeout(time: 5, unit: 'MINUTES')
+    }
+    environment {
+        PROYECTO = 'entrega-2-semana-5'
+    }
+    stages {
+        stage('Verificar procesos locales') {
+            steps {
+                dir(env.PROYECTO) {
+                    sh 'python ci/validar_local.py --salida reportes/local'
+                }
+            }
+        }
+    }
+    post {
+        always {
+            dir(env.PROYECTO) {
+                junit(testResults: 'reportes/local/junit*.xml', allowEmptyResults: false, skipPublishingChecks: true)
+                archiveArtifacts(artifacts: 'reportes/local/**', allowEmptyArchive: false)
+            }
+        }
+    }
+}

@@ -1,0 +1,49 @@
+name: jenkins-semana5
+services:
+  motor:
+    image: docker:dind
+    privileged: true
+    environment:
+      DOCKER_TLS_CERTDIR: /certs
+    volumes:
+      - certificados:/certs/client
+      - motor_datos:/var/lib/docker
+    networks:
+      integracion:
+        aliases: [docker]
+    healthcheck:
+      test: ["CMD-SHELL", "docker info >/dev/null 2>&1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+  jenkins:
+    build: .
+    ports:
+      - "127.0.0.1:8080:8080"
+    environment:
+      DOCKER_HOST: tcp://docker:2376
+      DOCKER_TLS_VERIFY: "1"
+      DOCKER_CERT_PATH: /certs/client
+      JAVA_OPTS: -Xms256m -Xmx1536m
+    volumes:
+      - jenkins_datos:/var/jenkins_home
+      - certificados:/certs/client:ro
+    depends_on:
+      motor:
+        condition: service_healthy
+    networks: [integracion]
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:8080/login >/dev/null"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 60s
+    restart: unless-stopped
+networks:
+  integracion:
+    driver: bridge
+volumes:
+  jenkins_datos:
+  certificados:
+  motor_datos:

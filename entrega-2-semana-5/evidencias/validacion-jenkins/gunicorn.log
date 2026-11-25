@@ -1,0 +1,29 @@
+[2026-11-24 21:36:17 -0500] [126] [INFO] Starting gunicorn 23.0.0
+[2026-11-24 21:36:17 -0500] [126] [INFO] Listening at: http://127.0.0.1:35317 (126)
+[2026-11-24 21:36:17 -0500] [126] [INFO] Using worker: sync
+[2026-11-24 21:36:17 -0500] [130] [INFO] Booting worker with pid: 130
+[2026-11-24 21:36:17 -0500] [131] [INFO] Booting worker with pid: 131
+127.0.0.1 - - [24/Nov/2026:21:36:17 -0500] "GET /salud HTTP/1.1" 200 49 "-" "Python-urllib/3.12"
+127.0.0.1 - - [24/Nov/2026:21:36:17 -0500] "GET / HTTP/1.1" 200 1455 "-" "Python-urllib/3.12"
+127.0.0.1 - - [24/Nov/2026:21:36:17 -0500] "GET /salud HTTP/1.1" 200 49 "-" "Python-urllib/3.12"
+127.0.0.1 - - [24/Nov/2026:21:36:17 -0500] "POST /tareas HTTP/1.1" 400 43 "-" "Python-urllib/3.12"
+127.0.0.1 - - [24/Nov/2026:21:36:17 -0500] "POST /tareas HTTP/1.1" 400 43 "-" "Python-urllib/3.12"
+127.0.0.1 - - [24/Nov/2026:21:36:17 -0500] "POST /tareas HTTP/1.1" 303 189 "-" "Python-urllib/3.12"
+127.0.0.1 - - [24/Nov/2026:21:36:17 -0500] "POST /tareas HTTP/1.1" 303 189 "-" "Python-urllib/3.12"
+127.0.0.1 - - [24/Nov/2026:21:36:17 -0500] "POST /tareas HTTP/1.1" 303 189 "-" "Python-urllib/3.12"
+127.0.0.1 - - [24/Nov/2026:21:36:17 -0500] "POST /tareas HTTP/1.1" 303 189 "-" "Python-urllib/3.12"
+127.0.0.1 - - [24/Nov/2026:21:36:17 -0500] "GET / HTTP/1.1" 200 1591 "-" "Python-urllib/3.12"
+127.0.0.1 - - [24/Nov/2026:21:36:17 -0500] "POST /tareas HTTP/1.1" 303 189 "-" "Python-urllib/3.12"
+127.0.0.1 - - [24/Nov/2026:21:36:17 -0500] "GET / HTTP/1.1" 200 1613 "-" "Python-urllib/3.12"
+127.0.0.1 - - [24/Nov/2026:21:36:17 -0500] "POST /tareas HTTP/1.1" 303 189 "-" "Python-urllib/3.12"
+127.0.0.1 - - [24/Nov/2026:21:36:17 -0500] "POST /tareas/d4a5cdecf30d4654a249ccd261418505/eliminar HTTP/1.1" 303 189 "-" "Python-urllib/3.12"
+127.0.0.1 - - [24/Nov/2026:21:36:17 -0500] "GET / HTTP/1.1" 200 1455 "-" "Python-urllib/3.12"
+127.0.0.1 - - [24/Nov/2026:21:36:17 -0500] "POST /tareas/714190ac4ec74f169e1491cd6e547b15/eliminar HTTP/1.1" 303 189 "-" "Python-urllib/3.12"
+127.0.0.1 - - [24/Nov/2026:21:36:17 -0500] "POST /tareas HTTP/1.1" 413 171 "-" "Python-urllib/3.12"
+127.0.0.1 - - [24/Nov/2026:21:36:18 -0500] "GET /salud HTTP/1.1" 503 89 "-" "Python-urllib/3.12"
+127.0.0.1 - - [24/Nov/2026:21:36:18 -0500] "GET /salud HTTP/1.1" 200 49 "-" "Python-urllib/3.12"
+127.0.0.1 - - [24/Nov/2026:21:36:18 -0500] "GET / HTTP/1.1" 200 1611 "-" "Python-urllib/3.12"
+[2026-11-24 21:36:18 -0500] [126] [INFO] Handling signal: term
+[2026-11-24 21:36:18 -0500] [130] [INFO] Worker exiting (pid: 130)
+[2026-11-24 21:36:18 -0500] [131] [INFO] Worker exiting (pid: 131)
+[2026-11-24 21:36:18 -0500] [126] [INFO] Shutting down: Master

@@ -1,0 +1,19 @@
+{
+  "algoritmo": "SHA-256",
+  "archivos": {
+    "app.py": "24c1d1c936d0d715d918f794cca31475b4595d566169cc71798ab0e282f2e618",
+    "requirements.txt": "84f18c59e081303a927e7a1cd3ec761b9b1885b386340386c3da0aac7a4ab6ef",
+    "Dockerfile": "bb2cb0ec1480393c9733a078dba93a792bbe5869553d9c6070afe87efa5dbcca",
+    "compose.yaml": "c06d35ef62710dbef82b7a5627bf3872a3efa27b890364fef107337ae6d6625e",
+    "compose.ci.yaml": "b73e98bcd441b9329cf5038f684daa34e396554f288d2574adff20cf6cf33054",
+    "Jenkinsfile": "cf2d80e01306bda0656b6c956f56167b430b14aad16442b7acfc342716d86501",
+    "ci/Jenkinsfile.local": "8dc00ce41385c0b2aa881380d8c14cc59476381f6f4c3a5051d1394d78947652",
+    "ci/pruebas_ci.py": "2bc020c1486764e61413ff9a5e0661f12f2324f90bfa6daeea5acfe244a38ad8",
+    "ci/persistencia.py": "7a76afcc31b1b33a75b9463e8c83fe2a70dd0ad24505e74587fa64a5bb728928",
+    "ci/validar_local.py": "2851985b31c97fd69bf9ca9e1e803f7f28144f54fd86ea75b3031cf28ca19736",
+    "ci/jenkins/Dockerfile": "1398e6596272614e97d090a59286903a1c5094d6e94ab6988a8db4d29c5c2779",
+    "ci/jenkins/compose.yaml": "c8a4ce41ad482c80455ac85427ccd12457f194eee283410c839d49f7e3155250",
+    "ci/jenkins/plugins.txt": "aa3fa19253ed26121bb5aaa6d0456508b69aec6d1206f650708d9f86f0b04877",
+    "templates/index.html": "79b1eb093823ed43663a7dd11676c93501abf2472492674faf01f2b9b5fada9e"
+  }
+}

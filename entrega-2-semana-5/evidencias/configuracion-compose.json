@@ -1,0 +1,11 @@
+{
+  "fecha_utc": "2026-11-25T02:34:02.346566+00:00",
+  "cliente": "Docker Compose v5.8.0",
+  "archivos": [
+    "compose.yaml",
+    "compose.ci.yaml",
+    "ci/jenkins/compose.yaml"
+  ],
+  "resultado": "APROBADA",
+  "alcance": "Validación de configuración sin arranque de contenedores"
+}

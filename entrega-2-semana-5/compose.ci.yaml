@@ -1,0 +1,29 @@
+services:
+  web:
+    build: .
+    environment:
+      REDIS_HOST: datos
+    depends_on:
+      datos:
+        condition: service_healthy
+    networks: [pruebas]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:5000/salud', timeout=4)"]
+      interval: 3s
+      timeout: 5s
+      retries: 20
+  datos:
+    image: redis:7.4-alpine
+    command: ["redis-server", "--appendonly", "yes", "--appendfsync", "always"]
+    volumes: ["datos_ci:/data"]
+    networks: [pruebas]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+networks:
+  pruebas:
+    driver: bridge
+volumes:
+  datos_ci:

@@ -1,0 +1,14 @@
+{
+  "fecha_utc": "2026-11-25T02:36:20.295002+00:00",
+  "jenkins": "2.580.2",
+  "java": "openjdk version \"21.0.13.1\" 2026-11-17",
+  "job": "Verificacion-local-semana-5",
+  "numero": 3,
+  "resultado": "SUCCESS",
+  "duracion_ms": 4971,
+  "total_pruebas": 13,
+  "fallidas": 0,
+  "omitidas": 0,
+  "alcance": "Pipeline de verificación local con procesos Gunicorn y Redis. Sin Docker ni checkout SCM.",
+  "jenkinsfile_docker": "Validado con el linter declarativo del controlador; no ejecutado con Docker."
+}

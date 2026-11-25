@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="Persistencia" tests="1" failures="0" errors="0"><testcase classname="Persistencia" name="conservar_registro_al_recrear_redis" /></testsuite>

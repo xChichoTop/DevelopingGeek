@@ -1,0 +1,81 @@
+{
+  "fecha_utc": "2026-11-25T02:36:17.991459+00:00",
+  "url": "http://127.0.0.1:35317",
+  "total": 12,
+  "fallas": 0,
+  "errores": 0,
+  "pruebas": [
+    {
+      "prueba": "__main__.Integracion.test_01_interfaz_disponible",
+      "resultado": "APROBADA",
+      "segundos": 0.013297,
+      "detalle": ""
+    },
+    {
+      "prueba": "__main__.Integracion.test_02_salud_y_conteo_reales",
+      "resultado": "APROBADA",
+      "segundos": 0.003109,
+      "detalle": ""
+    },
+    {
+      "prueba": "__main__.Integracion.test_03_rechazar_titulo_vacio",
+      "resultado": "APROBADA",
+      "segundos": 0.002866,
+      "detalle": ""
+    },
+    {
+      "prueba": "__main__.Integracion.test_04_rechazar_mas_de_120_caracteres",
+      "resultado": "APROBADA",
+      "segundos": 0.002597,
+      "detalle": ""
+    },
+    {
+      "prueba": "__main__.Integracion.test_05_eliminar_espacios_en_extremos",
+      "resultado": "APROBADA",
+      "segundos": 0.002706,
+      "detalle": ""
+    },
+    {
+      "prueba": "__main__.Integracion.test_06_aceptar_limite_de_120_caracteres",
+      "resultado": "APROBADA",
+      "segundos": 0.002588,
+      "detalle": ""
+    },
+    {
+      "prueba": "__main__.Integracion.test_07_crear_por_http_y_leer_en_redis",
+      "resultado": "APROBADA",
+      "segundos": 0.002942,
+      "detalle": ""
+    },
+    {
+      "prueba": "__main__.Integracion.test_08_consultar_tarea_en_interfaz",
+      "resultado": "APROBADA",
+      "segundos": 0.005538,
+      "detalle": ""
+    },
+    {
+      "prueba": "__main__.Integracion.test_09_escapar_html",
+      "resultado": "APROBADA",
+      "segundos": 0.004945,
+      "detalle": ""
+    },
+    {
+      "prueba": "__main__.Integracion.test_10_eliminar_tarea_por_http",
+      "resultado": "APROBADA",
+      "segundos": 0.007245,
+      "detalle": ""
+    },
+    {
+      "prueba": "__main__.Integracion.test_11_eliminar_identificador_inexistente",
+      "resultado": "APROBADA",
+      "segundos": 0.00273,
+      "detalle": ""
+    },
+    {
+      "prueba": "__main__.Integracion.test_12_rechazar_solicitud_mayor_a_4096_bytes",
+      "resultado": "APROBADA",
+      "segundos": 0.002569,
+      "detalle": ""
+    }
+  ]
+}

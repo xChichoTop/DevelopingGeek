@@ -1,0 +1,73 @@
+Started by user johan
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /workspace/scratch/2c1f2ee83980/tmp/jenkins/home/workspace/Verificacion-local-semana-5
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] timeout
+Timeout set to expire in 5 min 0 sec
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Verificar procesos locales)
+[Pipeline] dir
+Running in /workspace/scratch/2c1f2ee83980/tmp/jenkins/home/workspace/Verificacion-local-semana-5/entrega-2-semana-5
+[Pipeline] {
+[Pipeline] sh
++ python ci/validar_local.py --salida reportes/local
+test_01_interfaz_disponible (__main__.Integracion.test_01_interfaz_disponible) ... ok
+test_02_salud_y_conteo_reales (__main__.Integracion.test_02_salud_y_conteo_reales) ... ok
+test_03_rechazar_titulo_vacio (__main__.Integracion.test_03_rechazar_titulo_vacio) ... ok
+test_04_rechazar_mas_de_120_caracteres (__main__.Integracion.test_04_rechazar_mas_de_120_caracteres) ... ok
+test_05_eliminar_espacios_en_extremos (__main__.Integracion.test_05_eliminar_espacios_en_extremos) ... ok
+test_06_aceptar_limite_de_120_caracteres (__main__.Integracion.test_06_aceptar_limite_de_120_caracteres) ... ok
+test_07_crear_por_http_y_leer_en_redis (__main__.Integracion.test_07_crear_por_http_y_leer_en_redis) ... ok
+test_08_consultar_tarea_en_interfaz (__main__.Integracion.test_08_consultar_tarea_en_interfaz) ... ok
+test_09_escapar_html (__main__.Integracion.test_09_escapar_html) ... ok
+test_10_eliminar_tarea_por_http (__main__.Integracion.test_10_eliminar_tarea_por_http) ... ok
+test_11_eliminar_identificador_inexistente (__main__.Integracion.test_11_eliminar_identificador_inexistente) ... ok
+test_12_rechazar_solicitud_mayor_a_4096_bytes (__main__.Integracion.test_12_rechazar_solicitud_mayor_a_4096_bytes) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.054s
+
+OK
+Registro de persistencia guardado
+{"fecha_utc": "2026-11-25T02:36:18.674628+00:00", "prueba": "Persistencia de Redis", "resultado": "APROBADA", "detalle": ""}
+{
+  "fecha_utc": "2026-11-25T02:36:18.700136+00:00",
+  "entorno": "Procesos locales de Gunicorn y Redis sin contenedores",
+  "python": "3.12.14",
+  "flask": "3.1.2",
+  "redis_cliente": "6.4.0",
+  "gunicorn": "23.0.0",
+  "redis_servidor": "Redis server v=6.2.14 sha=40305114:0 malloc=libc bits=64 build=dff95a8e7a99d269",
+  "pruebas_http_redis": 12,
+  "pruebas_persistencia": 1,
+  "resultado": "APROBADA"
+}
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] dir
+Running in /workspace/scratch/2c1f2ee83980/tmp/jenkins/home/workspace/Verificacion-local-semana-5/entrega-2-semana-5
+[Pipeline] {
+[Pipeline] junit
+Recording test results
+[Pipeline] archiveArtifacts
+Archiving artifacts
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // timeout
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
